@@ -433,17 +433,71 @@
     }
     .pricing-card:hover { transform: translateY(-6px); box-shadow: 0 0 50px rgba(10,102,255,0.18), 0 20px 50px rgba(0,0,0,0.55); }
     .pricing-card.featured {
-      border-color: rgba(10,102,255,0.6);
+      border: none;
       background: linear-gradient(140deg, rgba(10,102,255,0.14) 0%, rgba(13,34,68,0.92) 100%);
-      box-shadow: 0 0 40px rgba(10,102,255,0.2), 0 8px 32px rgba(0,0,0,0.5);
-      order: -1; /* featured first on mobile */
+      box-shadow: none;
+      order: -1;
     }
-    .pricing-card.featured::before {
+
+    /* ── Sword-gleam animated border wrapper ── */
+    .featured-wrap {
+      position: relative;
+      border-radius: 18px;
+      padding: 1.5px;
+      overflow: hidden;
+      order: -1; /* keeps mobile ordering */
+      box-shadow:
+        0 0 30px rgba(10,102,255,0.28),
+        0 0 70px rgba(10,102,255,0.1),
+        0 12px 40px rgba(0,0,0,0.55);
+      transition: box-shadow 0.3s ease;
+    }
+    .featured-wrap:hover {
+      box-shadow:
+        0 0 45px rgba(10,102,255,0.4),
+        0 0 90px rgba(10,102,255,0.15),
+        0 20px 50px rgba(0,0,0,0.65);
+    }
+
+    /* The rotating gleam — large spinning conic behind the card */
+    .featured-wrap::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #0A66FF, #1DA1F2, transparent);
+      width: 300%; height: 300%;
+      top: -100%; left: -100%;
+      background: conic-gradient(
+        from 0deg at 50% 50%,
+        /* base steel-blue border glow */
+        rgba(10, 102, 255, 0.45) 0deg,
+        rgba(10, 102, 255, 0.45) 148deg,
+        /* lead-up shimmer */
+        rgba(80,  150, 255, 0.65) 153deg,
+        rgba(160, 210, 255, 0.85) 157deg,
+        /* white-hot sword edge */
+        rgba(230, 245, 255, 0.97) 160deg,
+        rgba(255, 255, 255, 1.00) 162deg,
+        rgba(245, 252, 255, 1.00) 164deg,
+        /* trailing shimmer */
+        rgba(160, 210, 255, 0.85) 167deg,
+        rgba(80,  150, 255, 0.65) 171deg,
+        /* back to base */
+        rgba(10, 102, 255, 0.45) 176deg,
+        rgba(10, 102, 255, 0.45) 360deg
+      );
+      animation: swordGleam 2.6s linear infinite;
+      will-change: transform;
+      z-index: 0;
+    }
+    @keyframes swordGleam {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* card sits on top of the gleam layer */
+    .featured-wrap .pricing-card.featured {
+      position: relative;
+      z-index: 1;
+      border-radius: 15px;
     }
     .popular-badge {
       display: inline-flex;
@@ -856,6 +910,7 @@
       }
       .pricing-card { flex: 1; }
       .pricing-card.featured { order: 0; }
+      .featured-wrap { order: 0; flex: 1; }
 
       /* Portfolio */
       .portfolio-grid-mobile  { display: none; }
@@ -1012,7 +1067,8 @@
           <a href="mailto:fletchmediacollective@gmail.com" class="btn btn-outline" style="text-align:center;width:100%;">Get Started</a>
         </div>
 
-        <!-- Tier 2 — Featured -->
+        <!-- Tier 2 — Featured (sword gleam border) -->
+        <div class="featured-wrap">
         <div class="pricing-card featured">
           <div class="popular-badge">
             <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
@@ -1033,6 +1089,7 @@
           </ul>
           <div class="tier-turnaround">⏱ Turnaround: 3–5 days</div>
           <a href="mailto:fletchmediacollective@gmail.com" class="btn btn-primary" style="text-align:center;width:100%;">Get Started</a>
+        </div>
         </div>
 
         <!-- Tier 3 -->
