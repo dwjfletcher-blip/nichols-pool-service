@@ -251,7 +251,7 @@
 
     .project-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
       gap: 2rem;
       max-width: 960px;
       margin: 0 auto;
@@ -487,9 +487,19 @@
       .nav-wordmark span { display: none; }
       .nav-logo img { width: 32px; height: 32px; }
       .nav-wordmark { font-size: 0.82rem; }
-      .hero { padding: 8rem 1.5rem 5rem; }
-      #projects, #contact { padding: 4rem 1.5rem; }
-      #about { padding: 4rem 1.5rem; }
+      .hero { padding: 8rem 1.25rem 5rem; }
+      .hero h1 { font-size: clamp(1.9rem, 9vw, 2.6rem); }
+      .hero h1 br { display: none; }
+      .hero p { font-size: 1rem; }
+      .btn-primary, .btn-secondary { width: 100%; text-align: center; padding: 0.9rem 1.5rem; }
+      .hero-actions { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+      #projects { padding: 4rem 1.25rem; }
+      .projects-header { margin-bottom: 2.5rem; }
+      .project-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .project-image { height: 200px; }
+      #contact { padding: 4rem 1.25rem; }
+      #about { padding: 4rem 1.25rem; }
+      .contact-email { font-size: 0.88rem; word-break: break-all; }
     }
   </style>
 </head>
